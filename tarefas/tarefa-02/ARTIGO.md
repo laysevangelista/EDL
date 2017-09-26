@@ -25,79 +25,101 @@ Com conceitos como big data e IoT ganhando mais espaço como geradoras de dados,
 
 
 <p>A nível de comparação, optar por uma linguagem para um trabalho de data science depende de um amplo espectro de fatores relacionados às condições disponíveis para o projeto que a de ser implementado, para tal será utilizado a linguagem Python que também é largamente utilizada para análise de dados. </p>
-<p>Além de ambas as linguagens serem consideradas de simples aprendizado, podemos atribuir como um ponto positivo a linguagem R,que a mesma possui uma abundância de pacotes lançados publicamente (mais de 5.000), que podem ser baixados para estender as capacidades da linguagem. Isso faz R ótimo para a execução de complexas análises de dados exploratórios. Ela também se integra bem com outras linguagens de programação como C ++, Java e C.</p>
-<p>Python é uma linguagem de programação de uso geral, embora Python não tenha um conjunto de pacotes e bibliotecas tão abrangente como os disponíveis para a linguagem R, a combinação de Python com ferramentas como Pandas, Numpy, Scipy, Scikit-learn e Seaborn, torna a linguagem uma escolha viável entre os Cientistas de Dados. A linguagem também está lentamente se tornando útil para tarefas em Machine Learning e de base para o trabalho estatístico intermediário (anteriormente apenas sob o domínio de R). </p>
+<p>Além de ambas as linguagens serem consideradas de simples aprendizado, podemos atribuir como um ponto positivo a linguagem R,possui uma abundância de pacotes lançados publicamente (mais de 5.000), que podem ser baixados para estender as capacidades da linguagem. Isso faz R uma ótima opção para a execução de complexas análises de dados exploratórios além de se integrar bem com outras linguagens de programação como C ++, Java e C.</p>
+<p>Python é uma linguagem de programação de uso geral, embora esta não tenha um conjunto de pacotes e bibliotecas tão abrangente como os disponíveis comparado a R, a combinação de Python com ferramentas como Pandas, Numpy, Scipy, Scikit-learn e Seaborn, torna a linguagem uma escolha viável entre os Cientistas de Dados. A linguagem também está lentamente se tornando útil para tarefas em Machine Learning e de base para o trabalho estatístico intermediário (anteriormente apenas sob o domínio de R). </p>
 
 ##  Exemplos de código representativos
 
-<p>Abaixo segue uma pequena amostra de tarefas que podem ser realizadas com ambas com R e Python. Podemos observar grande facilidade no trato sintático de R e Python. </p>
-
-R
-<p>
-  <pre><code>
-> coletivo <- read.csv("coletivos.csv");
-> jogadores<-(coletivo$Numero.Jogadores);
-> esporte<-(coletivo$Esportes);
-> print(nrow(coletivo));
-[1] 6
-> print(ncol(coletivo));
-[1] 2
-Hit <Return> to see next plot:         
-> barplot(jogadores, col= "darkgreen",main="Esportes Coletivos", xlab="Esportes", ylab="Numero de Jogadores", names.arg=coletivo$Esportes, border="black");
-Hit <Return> to see next plot:         
-> coletivo
-  Esportes Numero.Jogadores
-1  Futebol               11
-2    Volei                6
-3 Basquete                6
-4    rugby               15
-5 handebol                7
-6     polo                4
-> sapply(coletivo, mean, na.rm=TRUE);
-        Esportes Numero.Jogadores 
-              NA         8.166667 
-> print(coletivo$Esportes);
-[1] Futebol  Volei    Basquete rugby    handebol polo    
-Levels: Basquete Futebol handebol polo rugby Volei
-</pre></code>
-  </p>  
+<p> A seguir encontram-se alguns exemplos de algoritmos mais comumente utilizados em Machine Learning, eles podem ser utilizados para quase todos os problemas com dados.
+São Eles:
   
- [Grafico em R](https://www.dropbox.com/s/jkk1norhl2rjnw2/Rplot01.png?dl=0)
- 
- Python
-<p>
-<pre><code>  
-import pandas as pd
-df_coletivo = pandas.read_csv("coletivo.csv")
-df = pd.DataFrame(df_coletivo)
-print(df) # imprime coletivo, as linhas e colunas do dataframe
-print(df_coletivo['Esportes']) # imprime as linhas do campo Esportes
+ - Regressão Logística 
+ - K-Means
+ - Algoritmo de Redução de Dimensionalidade
+  
+</p>
 
- ['Futebol', 'Volei', 'Basquete', 'rugby', 'handebol', 'polo']
+**Regressão Logística** => prevê a probabilidade da ocorrência de um evento, ajustando os dados a uma função logística.
 
-
-#para o gráfico
-
-import plotly.plotly as py
-from plotly.graph_objs import *
-py.sign_in('username', 'api_key')
-df_coletivo = {
- 'Esportes': ['Futebol', 'Volei','Basquete', 'rugby', 'handebol','polo'],
-  'Numero Jogadores': [11, 6, 6, 15, 7, 4], 
-  "type": "bar"
-}
-data = Data([df_coletivo])
-fig = Figure(data=data)
-plot_url = py.plot(fig)
-
+<p> R
+   <pre><code>
+> x <- cbind(x_train,y_train) 
+> logistic <- glm(y_train ~ ., data = x,family='binomial')
+> summary(logistic) #saída
+> predicted= predict(logi)
 </pre></code>
  </p> 
  
-[Grafico em Python](https://www.dropbox.com/s/77iha0b232x7ada/gPython.png?dl=0)
+<p> Python
+<pre><code>  
+#Import Library
+from sklearn.linear_model import LogisticRegression
+#Assumed you have, X (predictor) and Y (target) for training data set and x_test(predictor) of test_dataset
+# Create logistic regression object
+model = LogisticRegression()
+# Train the model using the training sets and check score
+model.fit(X, y)
+model.score(X, y)
+#Equation coefficient and Intercept
+print('Coefficient: \n', model.coef_)
+print('Intercept: \n', model.intercept_)
+#Predict Output
+predicted= model.predict(x_test)
+</pre></code>
+ </p> 
+ 
+**K-Means** => É um tipo de algoritmo sem supervisão que resolve problemas de agrupamento.
+
+<p> R
+   <pre><code>
+> library(cluster)
+> fit <- kmeans(X, 3) 
+</pre></code>
+ </p> 
+ 
+ <p> Python
+  <pre><code>
+#Import Library
+from sklearn.cluster import KMeans
+#Assumed you have, X (attributes) for training data set and x_test(attributes) of test_dataset
+# Create KNeighbors classifier object model 
+k_means = KMeans(n_clusters=3, random_state=0)
+# Train the model using the training sets and check score
+model.fit(X)
+#Predict Output
+predicted= model.predict(x_test)
+</pre></code>
+</p>
+
+**Algoritmo de Redução de Dimensionalidade**
+
+<p> R
+  <pre><code>
+> library(stats)
+> pca <- princomp(train, cor = TRUE)
+> train_reduced  <- predict(pca,train)
+> test_reduced  <- predict(pca,test)
+</pre></code>
+</p>
+
+<p> Python
+  <pre><code>
+  #Import Library
+  from sklearn import decomposition
+  #assumindo que os dados já foram validados e testados previamente
+  # Create PCA obeject pca= decomposition.PCA(n_components=k) #default value of k =min(n_sample, n_features)
+  #fa= decomposition.FactorAnalysis()
+  #Reduz a dimensão utilizando PCA
+  train_reduced = pca.fit_transform(train)
+  #Reduz a dimensão de test dataset
+  test_reduced = pca.transform(test)
+</pre></code>
+</p>
+
 
 ## Conclusão
 <p> 
-Após a implementação de praticamente as mesmas atividades em ambas as linguagens, fica evidente que R possui mais funções voltadas à análise de dados já Python opta pelo uso extensivo de métodos e classes, Ao analisar o pacote Pandas (utilizado para o código comparativo em Python) podemos observar uma clara inspiração nos dataframes R. É comum observarmos também pequenos pacotes R inspirados em bibliotecas Python e com isso afirmar que ambas as linguagens são as ideais para atuar em data science.
+Após a implementação de praticamente as mesmas atividades em ambas as linguagens, fica evidente que R possui um menor esforço (linhas de código produzido) para desempenhar as mesmas ações em comparação com Python. Podemos observar ainda uma clara inspiração de Python nos dataframes R, como também a existência de pequenos pacotes R inspirados em bibliotecas Python, podendo assim ser inferido que ambas as linguagens são as boas escolhas para atuar em data science.
 
 </p>
 
@@ -105,6 +127,10 @@ Após a implementação de praticamente as mesmas atividades em ambas as linguag
 
 [Marcelo de Souza Lauretto ,Introdução à Análise de Dados Utilizando o Ambiente R](http://each.uspnet.usp.br/lauretto/cursoR2015/cursoR2015.pdf)
 
-[Linguagem R R-Gui e R-Commander ]( https://docs.ufpr.br/~taconeli/CE003M1/RCmdr.pdf)
-
 [Victor Lemes Landeiro, Instituto Nacional de Pesquisas da Amazônia Coordenação de Pesquisas em Ecologia](https://cran.r-project.org/doc/contrib/Landeiro-Introducao.pdf)
+
+[Cálculo PCA] (http://scikit-learn.org/stable/modules/decomposition.html#decompositions)
+
+[Infográfico R vs Python] (https://www.datacamp.com/community/tutorials/r-or-python-for-data-analysis#gs.zc0Qw3M)
+
+[Python vs R para machine learning e análise de dados](http://propus.science/python-versus-r-para-machine-learning-e-analise-de-dados/)
