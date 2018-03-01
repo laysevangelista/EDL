@@ -15,10 +15,10 @@ conterS={}
 timer1=os.time()
 
 function love.load()
-  
-  love.window.setTitle("Alimente o Cão") --título do jogo
+  titulo="Alimente o cão"
+  love.window.setTitle(titulo) --título do jogo
           --1
-  -- Nome: love.window.setTitle("Alimente o Cão")
+  -- Nome: titulo
   -- Propriedade: nome
   -- Binding time: compilação
   -- Explicação:Uma vez que o tipo específico não é conhecido antes do tempo de execução , a função executada é vinculada dinamicamente.
