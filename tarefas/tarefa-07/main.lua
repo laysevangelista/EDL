@@ -1,28 +1,26 @@
 -- -----------------------------------------------------
--- Tarefa 05 - Bindings
+-- Tarefa 07 - Arrays
 -- Elaborado por: Lays F. E. Popova
 -- Disciplina: Estruturas de Linguagem
 -- -----------------------------------------------------
 
 background = love.graphics.newImage ('assets/fundo.png')
 
-player = {} -- tarefa-06 registro / tabela
-itens = {}
+player = {} 
+itens = {} 
 window = {}
-cont = {}
-conterO={}
-conterS={}
+
 timer1=os.time()
 
 function love.load()
+
   titulo='Alimente o Cão'
   love.window.setTitle(titulo) --título do jogo
-          --1
+  -- tarefa-05
   -- Nome: titulo
   -- Propriedade: nome
   -- Binding time: compilação
   -- Explicação:Uma vez que o tipo específico não é conhecido antes do tempo de execução , a função executada é vinculada dinamicamente.
-
   
   pause = false
 
@@ -31,7 +29,7 @@ function love.load()
   window.width = 900 -- largura janela
   love.window.setMode(window.width, window.height)
   player.image = love.graphics.newImage('assets/player-animated.png') -- jogador
-            --2
+  -- tarefa-05
   -- Nome: variável "player.image"
   -- Propriedade: tipo
   -- Binding time: compilação
@@ -52,36 +50,34 @@ function love.load()
 
   player.come = 0
   itens.maxSimultaneousitens = 2
-  itens.types = {} -- tarefa-06 array
+  itens.types = {} -- tarefa-06 tupla(finita)
   
   -- itens disponíveis : ossinho ; carne ; stick
-  dic= {o = 'ossinho', c = 'carne', s='stick'} -- tarefa-06 dicionário
-  itens.types[1] = dic.o
-  itens.types[2] = dic.c
-  itens.types[3] = dic.s
+  reg= {o = 'ossinho', c = 'carne', s='stick'} -- tarefa-06 -> registro(finito)
+  itens.types[1] = reg.o
+  itens.types[2] = reg.c
+  itens.types[3] = reg.s
   -- carregamento das imagens
   itens.images = {}
-  itens.images[dic.o] = love.graphics.newImage('assets/ossinho.png')
-  itens.images[dic.c] = love.graphics.newImage('assets/carne.png')
-  itens.images[dic.s] = love.graphics.newImage('assets/stick.png')
+  itens.images[reg.o] = love.graphics.newImage('assets/ossinho.png')
+  itens.images[reg.c] = love.graphics.newImage('assets/carne.png')
+  itens.images[reg.s] = love.graphics.newImage('assets/stick.png')
 
   itens.dimensions = {}
    
-  itens.dimensions[dic.o] = {}
-  itens.dimensions[dic.o].width, itens.dimensions[dic.o].height = itens.images[dic.o]:getDimensions()
-  itens.dimensions[dic.c] = {}
-  itens.dimensions[dic.c].width, itens.dimensions[dic.c].height = itens.images[dic.c]:getDimensions()
-  itens.dimensions[dic.s] = {}
-  itens.dimensions[dic.s].width, itens.dimensions[dic.s].height = itens.images[dic.s]:getDimensions()
+  itens.dimensions[reg.o] = {}
+  itens.dimensions[reg.o].width, itens.dimensions[reg.o].height = itens.images[reg.o]:getDimensions()
+  itens.dimensions[reg.c] = {}
+  itens.dimensions[reg.c].width, itens.dimensions[reg.c].height = itens.images[reg.c]:getDimensions()
+  itens.dimensions[reg.s] = {}
+  itens.dimensions[reg.s].width, itens.dimensions[reg.s].height = itens.images[reg.s]:getDimensions()
   --contadores
   
-  itens.instances = {}
-  
-  
+  itens.instances = {} --tarefa 06 -> array 
+ 
   cont= 0 --contador total
   contC= 0 -- contador das carnes
   contO= 0 -- contador dos ossinhos
-  perfil={'Doguinho',250,150} -- tarefa-06 tupla
 
 end
 
@@ -92,7 +88,10 @@ function love.update(dt)
  
     player.come = 0
     -- movimetnação do cachorro
-	-- tarefa-06 ENUMERAÇÃO love.keyboard.isDown("left") , love.keyboard.isDown("right") , love.keyboard.isDown("up") , love.keyboard.isDown("down")
+	
+	-- tarefa-06 ENUMERAÇÃO 
+	-- love.keyboard.isDown("left") , love.keyboard.isDown("right") , love.keyboard.isDown("up") , love.keyboard.isDown("down")
+	
     if love.keyboard.isDown("left") and player.x > 0 then
       player.x = player.x - (player.speed * dt);
     end
@@ -108,21 +107,34 @@ function love.update(dt)
 
     -- criação dos itens no jogo
     for i=(#itens.instances) + 1, itens.maxSimultaneousitens do
+	
     -- tarefa-07
 	-- os itens que colidem com o player (ossinhos, carne e stick) aparecem randomicamente no jogo
 	-- respeitando as velocidades minimas e máximas (1) e tamanho da tela (2).
 	-- eles desaparecem ou se o objeto colide com eles ou se cruzaram totalmente a tela , seguindo o fluxo
 	-- da direita para a esquerda e quantidade variando de 1 a 2 (aparecendo em pares)
       math.randomseed( os.time() + i )
-      itens.instances[i] = {} -- tarefa-06 tupla
+      itens.instances[i] = {} 
       itens.instances[i].x = window.width
       itens.instances[i].speed = math.random(390,800); --(1)
       itens.instances[i].type = itens.types[math.random(1, #itens.types)]; 
-	  itens.instances[i].y = (math.random(0, window.height - itens.dimensions[itens.instances[i].type].height)) --(2)
+	  itens.instances[i].y = (math.random(0, window.height - itens.dimensions[itens.instances[i].type].height)) --(2) 
+	  -- Tarefa-05
+      -- Nome: Função math.random()
+      -- Propriedade: Semântica
+      -- Binding Time: Design 
+      -- Explicação: math.random() é uma função nativa da biblioteca padrão de LUA
+      -- com isso sua implementação e nome foram definidos no tempo de design da linguagem.
+   
 
     end
     -- movimentação dos itens
     for i=#itens.instances, 1, -1 do
+	-- Tarefa-05
+    -- Nome: Operador #
+    -- Propriedade: Semântica
+    -- Binding time: Design
+    -- Explicação: O operador # recebe o tamanho de um array/vetor foi atribuido no período do design da linguagem.
       local b = itens.instances[i]
       itens.instances[i].x = b.x - dt * b.speed
       if player.x < b.x + itens.dimensions[b.type].width and
@@ -130,21 +142,16 @@ function love.update(dt)
          player.y < b.y + itens.dimensions[b.type].height and
          player.height + player.y > b.y then
            player.come = 1
-		             --3
-		     -- Nome: variável "player.x / player.y"
-             -- Propriedade: endereço
-             -- Binding time: design
-             -- Explicação: dado que player.x e player.y direcionam o ato
-             -- de "comer" , o posicionamento do player no ambiente de jogo vai sendo alterado.
+
            if b.type == "ossinho" then -- pontuação ao comer os ossinhos
-			   contO = contO + perfil[3]
+		      contO = contO + 150
 			  cont=cont+contO
              table.remove(itens.instances, i)
 		   elseif b.type =="carne" then -- pontuação ao comer as carnes
-			 contC = contC +perfil[2]
+			 contC = contC +250
 			 cont=cont+contC
 			 table.remove(itens.instances, i)
-			           --4
+			  -- tarefa-05
 			  -- Nome: variável “cont”
 			  -- Propriedade: valor
               -- Binding time: execução
@@ -199,22 +206,15 @@ function love.draw()
 		player.vivo=true
 	end 
   else
-	love.graphics.printf("GAME OVER "..perfil[1], 350, 260, 9999)
-    love.graphics.printf(cont.." pontos", 410, 290, 9999)
-	          --5
-  -- Nome: variável "player.vivo"
-  -- Propriedade: valor
-  -- Binding time: design
-  -- Explicação: dado que player.vivo recebe uma caracteristica (true vivo /false morto)
-  -- o player morto muda a aparência do jogo.
-  	
- 
+	love.graphics.printf("GAME OVER ".."Doguinho", 350, 255, 9999)
+    love.graphics.printf(cont.." pontos", 410, 320, 9999)
+
   end	
  
-
 end
 -- pausa e saida do jogo
 function love.keypressed(k)
+
     if k == 'escape' then
          love.event.quit()
 	end
@@ -222,7 +222,7 @@ function love.keypressed(k)
 		pause = not pause
 		
 	end	
-	          --6
+-- tarefa-05
 -- Nome: variável “k”
 -- Propriedade: endereço
 -- Binding time: execução
@@ -234,4 +234,6 @@ function love.keypressed(k)
 -- se for 'space' o evento "pausar" será acionado
    
 end
+
+
 
