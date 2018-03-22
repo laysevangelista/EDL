@@ -8,22 +8,25 @@ background = love.graphics.newImage ('assets/fundo.png')
 
 player = {}
 itens = {}
+-- tarefa-05
+--Nome: Variável "itens"
+--Propriedade: Endereço
+--Binding time: Compilação
+--Explicação: Como a variável em questão é global, a alocão de espaço na memória se dá em tempo de compilação.
 window = {}
-cont = {}
-conterO={}
-conterS={}
+
 timer1=os.time()
 
 function love.load()
-  titulo="Alimente o cão"
-  love.window.setTitle(titulo) --título do jogo
-          --1
-  -- Nome: titulo
-  -- Propriedade: nome
-  -- Binding time: compilação
-  -- Explicação:Uma vez que o tipo específico não é conhecido antes do tempo de execução , a função executada é vinculada dinamicamente.
-
   
+  titulo='Alimente o Cão' 
+  love.window.setTitle(titulo) --título do jogo 
+  --1 
+  -- Nome: titulo 
+  -- Propriedade: nome 
+  -- Binding time: compilação 
+  -- Explicação:Uma vez que o tipo específico não é conhecido antes do tempo de execução , a função executada é vinculada dinamicamente. 
+
   pause = false
 
   love.graphics.setFont(love.graphics.newFont(20)) -- tamanho da fonte
@@ -101,10 +104,21 @@ function love.update(dt)
 
     -- criação dos itens no jogo
     for i=(#itens.instances) + 1, itens.maxSimultaneousitens do
+	-- Tarefa-05
+    -- Nome: Operador #
+    -- Propriedade: Semântica
+    -- Binding time: Design
+    -- Explicação: O operador # recebe o tamanho de um array/vetor foi atribuido no período do design da linguagem.
       math.randomseed( os.time() + i )
       itens.instances[i] = {}
       itens.instances[i].x = window.width
       itens.instances[i].speed = math.random(390,800);
+	  -- Tarefa-05
+      -- Nome: Função math.random()
+      -- Propriedade: Semântica
+      -- Binding Time: Design 
+      -- Explicação: math.random() é uma função nativa da biblioteca padrão de LUA
+      -- com isso sua implementação e nome foram definidos no tempo de design da linguagem.
       itens.instances[i].type = itens.types[math.random(1, #itens.types)];
 	  itens.instances[i].y = (math.random(0, window.height - itens.dimensions[itens.instances[i].type].height))
     end
@@ -127,20 +141,25 @@ function love.update(dt)
 			  contO = contO + 150
 			  cont=cont+contO
              table.remove(itens.instances, i)
+			 --tarefa-05
+			 -- Nome: table.remove (table)
+			 -- Propriedade: implementação
+		     -- Binding time: Design
+		     -- Explicação: Arrays, vetores, matrizes e classes são todos um table em lua. 
+			 -- Table é o único contêiner que existe em lua, como uma variável representando vários valores dentro dela. 
+			 -- Esse container pode ser adicionado ou removido a hora que quiser, sendo sua implementação definida durante o design da linguagem.
 		   elseif b.type =="carne" then -- pontuação ao comer as carnes
 			 contC = contC +250
 			 cont=cont+contC
 			 table.remove(itens.instances, i)
-			           --4
+			  -- tarefa-05
 			  -- Nome: variável “cont”
 			  -- Propriedade: valor
               -- Binding time: execução
 			  -- Explicação: dado que “cont” é uma variável
               -- que possui vinculação dinâmica, uma vez que 
 			  -- ela está tendo o seu conteúdo alterado durante 
-			  -- o tempo de execução.
-
-			 
+			  -- o tempo de execução.			 
 		  elseif b.type == "stick" then -- muda o status de ativo e determina o fim do jogo
 			player.vivo=0
           end 
@@ -182,12 +201,7 @@ function love.draw()
   elseif player.vivo ==0 then
 	love.graphics.printf("GAME OVER", 400, 260, 9999)
     love.graphics.printf(cont.." pontos", 410, 290, 9999)
-	          --5
-  -- Nome: variável "player.vivo"
-  -- Propriedade: valor
-  -- Binding time: design
-  -- Explicação: dado que player.vivo recebe uma caracteristica (1 vivo /0 morto)
-  -- o player morto muda a aparência do jogo.
+
   end	
   -- jogo pausado
   if pause then 
@@ -203,7 +217,7 @@ function love.keypressed(k)
 	if k== 'space' then
 		pause = not pause
 	end	
-	          --6
+--tarefa-06
 -- Nome: variável “k”
 -- Propriedade: endereço
 -- Binding time: execução
