@@ -21,7 +21,7 @@ function love.load()
   
   titulo='Alimente o Cão' 
   love.window.setTitle(titulo) --título do jogo 
-  --1 
+  -- tarefa 05
   -- Nome: titulo 
   -- Propriedade: nome 
   -- Binding time: compilação 
@@ -34,7 +34,7 @@ function love.load()
   window.width = 900 -- largura janela
   love.window.setMode(window.width, window.height)
   player.image = love.graphics.newImage('assets/player-animated.png') -- jogador
-            --2
+  -- tarefa 05
   -- Nome: variável "player.image"
   -- Propriedade: tipo
   -- Binding time: compilação
@@ -104,7 +104,7 @@ function love.update(dt)
 
     -- criação dos itens no jogo
     for i=(#itens.instances) + 1, itens.maxSimultaneousitens do
-	-- Tarefa-05
+    -- Tarefa-05
     -- Nome: Operador #
     -- Propriedade: Semântica
     -- Binding time: Design
@@ -113,7 +113,7 @@ function love.update(dt)
       itens.instances[i] = {}
       itens.instances[i].x = window.width
       itens.instances[i].speed = math.random(390,800);
-	  -- Tarefa-05
+      -- Tarefa-05
       -- Nome: Função math.random()
       -- Propriedade: Semântica
       -- Binding Time: Design 
@@ -131,12 +131,7 @@ function love.update(dt)
          player.y < b.y + itens.dimensions[b.type].height and
          player.height + player.y > b.y then
            player.come = 1
-		             --3
-		     -- Nome: variável "player.x / player.y"
-             -- Propriedade: endereço
-             -- Binding time: design
-             -- Explicação: dado que player.x e player.y direcionam o ato
-             -- de "comer" , o posicionamento do player no ambiente de jogo vai sendo alterado.
+
            if b.type == "ossinho" then -- pontuação ao comer os ossinhos
 			  contO = contO + 150
 			  cont=cont+contO
@@ -144,8 +139,8 @@ function love.update(dt)
 			 --tarefa-05
 			 -- Nome: table.remove (table)
 			 -- Propriedade: implementação
-		     -- Binding time: Design
-		     -- Explicação: Arrays, vetores, matrizes e classes são todos um table em lua. 
+		         -- Binding time: Design
+		         -- Explicação: Arrays, vetores, matrizes e classes são todos um table em lua. 
 			 -- Table é o único contêiner que existe em lua, como uma variável representando vários valores dentro dela. 
 			 -- Esse container pode ser adicionado ou removido a hora que quiser, sendo sua implementação definida durante o design da linguagem.
 		   elseif b.type =="carne" then -- pontuação ao comer as carnes
@@ -155,9 +150,9 @@ function love.update(dt)
 			  -- tarefa-05
 			  -- Nome: variável “cont”
 			  -- Propriedade: valor
-              -- Binding time: execução
+                          -- Binding time: execução
 			  -- Explicação: dado que “cont” é uma variável
-              -- que possui vinculação dinâmica, uma vez que 
+                          -- que possui vinculação dinâmica, uma vez que 
 			  -- ela está tendo o seu conteúdo alterado durante 
 			  -- o tempo de execução.			 
 		  elseif b.type == "stick" then -- muda o status de ativo e determina o fim do jogo
