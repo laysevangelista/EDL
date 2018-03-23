@@ -3,25 +3,31 @@
 -- Elaborado por: Lays F. E. Popova
 -- Disciplina: Estruturas de Linguagem
 -- -----------------------------------------------------
-
+-- lINHAS TAREFA-07 | 82 | 123 | 156  183
+-- -----------------------------------------------------
 background = love.graphics.newImage ('assets/fundo.png')
 
-player = {} 
-itens = {} 
-window = {}
+player = {}
+itens = {}
+-- tarefa-05
+--Nome: Variável "itens"
+--Propriedade: Endereço
+--Binding time: Compilação
+--Explicação: Como a variável em questão é global, a alocão de espaço na memória se dá em tempo de compilação.
+window = {}--tarefa-06 -> ARRAY
 
 timer1=os.time()
 
 function love.load()
-
-  titulo='Alimente o Cão'
-  love.window.setTitle(titulo) --título do jogo
-  -- tarefa-05
-  -- Nome: titulo
-  -- Propriedade: nome
-  -- Binding time: compilação
-  -- Explicação:Uma vez que o tipo específico não é conhecido antes do tempo de execução , a função executada é vinculada dinamicamente.
   
+  titulo='Alimente o Cão' 
+  love.window.setTitle(titulo) --título do jogo 
+  -- tarefa 05
+  -- Nome: titulo 
+  -- Propriedade: nome 
+  -- Binding time: compilação 
+  -- Explicação:Uma vez que o tipo específico não é conhecido antes do tempo de execução , a função executada é vinculada dinamicamente. 
+
   pause = false
 
   love.graphics.setFont(love.graphics.newFont(20)) -- tamanho da fonte
@@ -29,7 +35,7 @@ function love.load()
   window.width = 900 -- largura janela
   love.window.setMode(window.width, window.height)
   player.image = love.graphics.newImage('assets/player-animated.png') -- jogador
-  -- tarefa-05
+  -- tarefa 05
   -- Nome: variável "player.image"
   -- Propriedade: tipo
   -- Binding time: compilação
@@ -37,7 +43,7 @@ function love.load()
   -- o objeto imagem é pre compilado antes do programa ser executado
 
   
-  player.img = {} 
+  player.img = {}
   -- dimensões do player
   player.img.standby = love.graphics.newQuad(0, 0, 128, 128, player.image:getDimensions())
   player.img.come = love.graphics.newQuad(128, 0, 128, 128, player.image:getDimensions())
@@ -45,15 +51,15 @@ function love.load()
 
   player.x = 50
   player.y = 415
-  player.vivo = true -- se player não esta vivo = game over . 1 = vivo , 0 = game over , pausa = jogo pausado
+  player.vivo = 1 -- se player não esta vivo = game over . 1 = vivo e 0 = game over
   player.speed = 190 -- velocidade
 
   player.come = 0
   itens.maxSimultaneousitens = 2
-  itens.types = {} -- tarefa-06 tupla(finita)
-  
-  -- itens disponíveis : ossinho ; carne ; stick
-  reg= {o = 'ossinho', c = 'carne', s='stick'} -- tarefa-06 -> registro(finito)
+  itens.types = {} 
+   -- itens disponíveis : ossinho ; carne ; stick
+  reg= {o = 'ossinho', c = 'carne', s='stick'} -- tarefa-06 -> REGISTRO(finito)
+  -- tarefa-06 TUPLA(finita)
   itens.types[1] = reg.o
   itens.types[2] = reg.c
   itens.types[3] = reg.s
@@ -73,7 +79,13 @@ function love.load()
   itens.dimensions[reg.s].width, itens.dimensions[reg.s].height = itens.images[reg.s]:getDimensions()
   --contadores
   
-  itens.instances = {} --tarefa 06 -> array 
+  itens.instances = {} --tarefa-06 -> ARRAY
+	
+	-- tarefa-07
+	-- os itens que colidem com o player (ossinhos, carne e stick) aparecem randomicamente no jogo
+	-- respeitando as velocidades minimas e máximas (1) e tamanho da tela (2).
+	-- eles desaparecem ou se o objeto colide com eles ou se cruzaram totalmente a tela , seguindo o fluxo
+	-- da direita para a esquerda e quantidade variando de 1 a 2 (aparecendo em pares).
  
   cont= 0 --contador total
   contC= 0 -- contador das carnes
@@ -90,7 +102,8 @@ function love.update(dt)
     -- movimetnação do cachorro
 	
 	-- tarefa-06 ENUMERAÇÃO 
-	-- love.keyboard.isDown("left") , love.keyboard.isDown("right") , love.keyboard.isDown("up") , love.keyboard.isDown("down")
+	-- love.keyboard.isDown("left") , love.keyboard.isDown("right") , 
+	--love.keyboard.isDown("up") , love.keyboard.isDown("down")
 	
     if love.keyboard.isDown("left") and player.x > 0 then
       player.x = player.x - (player.speed * dt);
@@ -107,29 +120,23 @@ function love.update(dt)
 
     -- criação dos itens no jogo
     for i=(#itens.instances) + 1, itens.maxSimultaneousitens do
-	
-    -- tarefa-07
-	-- os itens que colidem com o player (ossinhos, carne e stick) aparecem randomicamente no jogo
-	-- respeitando as velocidades minimas e máximas (1) e tamanho da tela (2).
-	-- eles desaparecem ou se o objeto colide com eles ou se cruzaram totalmente a tela , seguindo o fluxo
-	-- da direita para a esquerda e quantidade variando de 1 a 2 (aparecendo em pares)
+	--tarefa-07 -- Escopo: Como a variável "itens.instances" é do tipo global, ela pode ser visualizada em todo o código.
       math.randomseed( os.time() + i )
       itens.instances[i] = {} 
       itens.instances[i].x = window.width
       itens.instances[i].speed = math.random(390,800); --(1)
       itens.instances[i].type = itens.types[math.random(1, #itens.types)]; 
-	  itens.instances[i].y = (math.random(0, window.height - itens.dimensions[itens.instances[i].type].height)) --(2) 
-	  -- Tarefa-05
+      itens.instances[i].y = (math.random(0, window.height - itens.dimensions[itens.instances[i].type].height)) --(2) 
+	   -- Tarefa-05
       -- Nome: Função math.random()
       -- Propriedade: Semântica
       -- Binding Time: Design 
       -- Explicação: math.random() é uma função nativa da biblioteca padrão de LUA
       -- com isso sua implementação e nome foram definidos no tempo de design da linguagem.
    
-
     end
     -- movimentação dos itens
-    for i=#itens.instances, 1, -1 do
+    for i=#itens.instances, 1, -1 do			
 	-- Tarefa-05
     -- Nome: Operador #
     -- Propriedade: Semântica
@@ -137,6 +144,8 @@ function love.update(dt)
     -- Explicação: O operador # recebe o tamanho de um array/vetor foi atribuido no período do design da linguagem.
       local b = itens.instances[i]
       itens.instances[i].x = b.x - dt * b.speed
+
+	
       if player.x < b.x + itens.dimensions[b.type].width and
          player.x + player.width > b.x and
          player.y < b.y + itens.dimensions[b.type].height and
@@ -144,25 +153,34 @@ function love.update(dt)
            player.come = 1
 
            if b.type == "ossinho" then -- pontuação ao comer os ossinhos
+		-- tarefa-07
+		-- Tempo de vida: Enquanto o jogo estiver em execução (se o player estiver "vivo")
+		-- => colidindo com "ossinho" e "carne" soma pontos				
 		      contO = contO + 150
 			  cont=cont+contO
              table.remove(itens.instances, i)
+			 --tarefa-05
+			 -- Nome: table.remove (table)
+			 -- Propriedade: implementação
+		         -- Binding time: Design
+		         -- Explicação: Arrays, vetores, matrizes e classes são todos um table em lua. 
+			 -- Table é o único contêiner que existe em lua, como uma variável representando vários valores dentro dela. 
+			 -- Esse container pode ser adicionado ou removido a hora que quiser, sendo sua implementação definida durante o design da linguagem.
 		   elseif b.type =="carne" then -- pontuação ao comer as carnes
 			 contC = contC +250
 			 cont=cont+contC
+			 -- tarefa-05
+			 -- Nome: variável “cont”
+			 -- Propriedade: valor
+                         -- Binding time: execução
+			 -- Explicação: dado que “cont” é uma variável
+                         -- que possui vinculação dinâmica, uma vez que 
+			 -- ela está tendo o seu conteúdo alterado durante 
+			 -- o tempo de execução.
 			 table.remove(itens.instances, i)
-			  -- tarefa-05
-			  -- Nome: variável “cont”
-			  -- Propriedade: valor
-              -- Binding time: execução
-			  -- Explicação: dado que “cont” é uma variável
-              -- que possui vinculação dinâmica, uma vez que 
-			  -- ela está tendo o seu conteúdo alterado durante 
-			  -- o tempo de execução.
-
-			 
+	
 		  elseif b.type == "stick" then -- muda o status de ativo e determina o fim do jogo
-			player.vivo=false
+			player.vivo=false -- tarefa-07 => colidindo com "stick" o jogo termina (player "morto")
           end 
       end
       if b.x <= 0 then
@@ -171,7 +189,6 @@ function love.update(dt)
     end
   end
  end 
-
 end
 
 function love.draw()
@@ -234,6 +251,3 @@ function love.keypressed(k)
 -- se for 'space' o evento "pausar" será acionado
    
 end
-
-
-
