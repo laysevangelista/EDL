@@ -1,4 +1,4 @@
-- -----------------------------------------------------
+-- -----------------------------------------------------
 -- Tarefa 06 - Tipos de Dados
 -- Elaborado por: Lays F. E. Popova
 -- Disciplina: Estruturas de Linguagem
