@@ -1,4 +1,8 @@
-
+-- -----------------------------------------------------
+-- Tarefa 08 - Tarefa extra - closures e co-rotinas
+-- Elaborado por: Lays F. E. Popova
+-- Disciplina: Estruturas de Linguagem
+-- -----------------------------------------------------
 timer1=os.time()
 -- tarefa-06 -> registro
 player = {
